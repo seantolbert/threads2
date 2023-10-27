@@ -4,18 +4,17 @@ import {
   SafeAreaView,
   ScrollView,
 } from "react-native";
+
+import { Text, View } from "../../components/Themed";
 import Lottie from "lottie-react-native";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { createRandomUser } from "../../utils/generate-dummy-data";
-
-
-const user = createRandomUser()
-
-console.log(JSON.stringify(user, null, 2))
+import { ThreadsContext } from "../../context/thread-context";
+import ThreadsItem from "../../components/ThreadsItem";
 
 export default function TabOneScreen() {
   const animationRef = useRef<Lottie>(null);
-
+  const threads = useContext(ThreadsContext);
 
   return (
     <SafeAreaView>
@@ -42,6 +41,9 @@ export default function TabOneScreen() {
           //   alert("finished")
           // }}
         />
+        {threads.map((thread) => (
+          <ThreadsItem key={thread.id} {...thread} />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );
